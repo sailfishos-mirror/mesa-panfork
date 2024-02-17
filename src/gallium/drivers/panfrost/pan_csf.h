@@ -32,19 +32,33 @@
 
 struct cs_builder;
 
+enum panfrost_csf_queue_id {
+   /* Vertex/tiler/compute queue. */
+   PANFROST_CSF_VTC_QUEUE,
+   PANFROST_CSF_FRAG_QUEUE,
+   PANFROST_CSF_QUEUE_COUNT,
+};
+
 struct panfrost_csf_batch {
    /* CS related fields. */
    struct {
       /* CS builder. */
       struct cs_builder *builder;
 
-      /* CS state, written through the CS, and checked when PAN_MESA_DEBUG=sync.
+      /* CS state, written through the CS, and checked when
+       * PAN_MESA_DEBUG=sync.
        */
       struct panfrost_ptr state;
-   } cs;
+
+      /* Flush ID saved at cs_finish() time. */
+      uint32_t flush_id;
+   } cs[PANFROST_CSF_QUEUE_COUNT];
 
    /* Pool used to allocate CS chunks. */
    struct panfrost_pool cs_chunk_pool;
+
+   /* Tiler -> fragment sync object. */
+   mali_ptr tiler_frag_sync;
 };
 
 struct panfrost_csf_context {
