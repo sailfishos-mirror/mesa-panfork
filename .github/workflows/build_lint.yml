@@ -41,7 +41,7 @@ jobs:
           #  python-version: 'pypy-3.8'
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
@@ -61,7 +61,7 @@ jobs:
   examples:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -72,7 +72,7 @@ jobs:
     - name: Install Mesa
       run: uv pip install --system .[dev]
     - name: Checkout mesa-examples
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: projectmesa/mesa-examples
         path: mesa-examples
